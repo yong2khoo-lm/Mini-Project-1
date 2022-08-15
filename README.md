@@ -1,1 +1,1 @@
-# Root folder for Django
+# To-do: Write descriptions
