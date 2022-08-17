@@ -12,7 +12,7 @@
 <img src="https://user-images.githubusercontent.com/51041738/184996499-20c651e1-0ae3-48c1-ab61-b6194697a49b.png" width=500>
 
 - Unable to use XPath, as content sections are dynamic
-
+- However, we still decide to move on with an alternative account, attempting to scrape 'less aggressively' =)
 
 
 # Reference
