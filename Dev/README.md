@@ -13,7 +13,7 @@
 
 - Unable to use XPath, as content sections are dynamic
 - However, we still decide to move on with an alternative account, attempting to scrape 'less aggressively' =)
-
+- (2022-08-18) - second account hits this prompt also -.-
 
 # Reference
 - LinkedIn [article](https://www.linkedin.com/pulse/how-easy-scraping-data-from-linkedin-profiles-david-craven/) on how to scrape LinkedIn
