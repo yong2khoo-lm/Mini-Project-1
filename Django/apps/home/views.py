@@ -100,8 +100,6 @@ def index(request):
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
-def load_index():
-    a = 1
 
 @login_required(login_url="/login/")
 def pages(request):
@@ -112,6 +110,9 @@ def pages(request):
 
         load_template = request.path.split('/')[-1]
 
+        if load_template == 'index.html':
+            return index(request)
+            
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
         context['segment'] = load_template
@@ -127,3 +128,4 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
