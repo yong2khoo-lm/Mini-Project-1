@@ -12,6 +12,8 @@ import plotly.express as px
 import plotly
 from plotly.graph_objects import Layout;
 import pandas as pd
+import re
+from collections import Counter
 from core.settings import BASE_DIR, CORE_DIR
 
 @login_required(login_url="/login/")
@@ -34,11 +36,104 @@ def index(request):
         return len(skills)
 
     def get_location_pie_chart_html():
-        df['state'] = df["current_location"].str.splict(",")[1]
-        df['state'].groupby(['city']).agg(count_state=('city', 'count')).reset_index().value_counts()
+        def get_location_value_count():
+            predefined_locs = ['sembilan', 'penang', 'kedah', 'kelantan', 'melacca', 'selangor', 'pahang', 'johore',
+                    'johor bahru', 'sabah', 'sarawak', 'perak', 'malacca', "other countries (singapore)", 'kuala lumpur',
+                   'others (malaysia)', 'terengganu', 'singapore']
 
+            def get_location(loc):
+                if loc is None:
+                    return "unknown"
+                if isinstance(loc, str) is False:
+                    return "unknown"
+                locs = loc.split(",")
+                if len(locs) == 0:
+                    return "unknown"
+                
+                res_loc = locs[0].lower().strip()
+                if len(locs) == 3:
+                    res_loc = locs[1].lower().strip()
+                    if res_loc == "malaysia":
+                        res_loc = locs[0].strip()
+                        
+                if 'kuala lumpur' in res_loc:
+                    res_loc = 'kuala lumpur'
+                if 'putrajaya' in res_loc:
+                    res_loc = 'selangor'
+                
+                if res_loc == 'malaysia':
+                    res_loc = 'others (malaysia)'
+                    
+                if res_loc == 'singapore':
+                    res_loc = 'other countries (singapore)'
+                    
+                if 'negri' in res_loc:
+                    res_loc = res_loc.replace('negri', '').strip()
+                    
+                if res_loc not in predefined_locs:
+                    res_loc = "other countries"
+                return res_loc
+            
+            df["current_location_clean"] = df["current_location"].apply(get_location)
+            df_res = df.groupby('current_location_clean').agg(loc_count=('current_location_clean', 'count')).reset_index().value_counts()
+            return df_res
+        
+        res = get_location_value_count()
+        labels = [a for (a, b) in res.index]
+        values = [b for (a, b) in res.index]
+        fig = px.pie(labels, values=values, names=labels)
+        fig.update_layout({
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+            'font_color': 'white'
+        })
+        graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        return graph_div 
 
-        #fig = px.pie(values=random_x, names=names)
+    def get_top_30_skills_bar_html():
+        def get_skill(skill):
+            if skill is None:
+                return "unknown"
+            
+            tmp = skill.lower()
+            tmp = re.sub("\(.*?\)",'',tmp).strip()
+            return tmp
+        df['skills_clean'] = df["skills"].apply(get_skill)
+        skills_by_total = []
+        for each_person_skills in df["skills_clean"]:
+            tmp = eval(each_person_skills)
+            skills_by_total = skills_by_total + tmp
+
+        cnt = Counter(skills_by_total)
+        result = cnt.most_common(30)
+
+        labels = [a for (a, b) in result]
+        values = [b for (a, b) in result]
+
+        data = {"type": labels, "value": values}
+        fig = px.bar(data, x="type", y="value", orientation='v')
+        fig.update_layout({
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+            'font_color': 'white'
+        })
+        graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        return graph_div 
+
+    def get_total_skills_histogram_html():
+        skills_by_total = []
+        for each_person_skills in df["skills"]:
+            tmp = eval(each_person_skills)
+            skills_by_total.append(len(tmp))
+        data = {"Total Skills":skills_by_total}
+        fig = px.histogram(data, x="Total Skills")
+        fig.update_layout({
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+            'font_color': 'white'
+        })
+        graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
+        return graph_div 
 
     def get_dummy_histogram_html():
         data = {"type": [1,2,3,2,3,4,5,6,5,3,2,2]}
@@ -88,7 +183,9 @@ def index(request):
      'total_candidates': get_total_candidates(),
      'total_candidates_exp': get_total_candidates_exp(),
      'total_candidates_skill': get_total_candidates_skill(),
-     #'location_pie_chart': get_location_pie_chart_html(),
+     'location_pie_chart': get_location_pie_chart_html(),
+     'skill_top_30_bar_chart': get_top_30_skills_bar_html(),
+     'skill_histogram_chart': get_total_skills_histogram_html(),
      'dummy_pie': get_dummy_pie_html(),
      'dummy_pie2': get_dummy_pie_html(),
      'dummy_bar': get_dummy_bar_html(),
