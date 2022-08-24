@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Table (Scraped Data)</div>
+						</div>
+						<div class="card-body">
+								{{dummy_table|safe}}
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}
+

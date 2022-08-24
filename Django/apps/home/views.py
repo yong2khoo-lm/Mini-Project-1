@@ -15,6 +15,7 @@ import pandas as pd
 import re
 from collections import Counter
 from core.settings import BASE_DIR, CORE_DIR
+import plotly.graph_objects as go
 
 @login_required(login_url="/login/")
 def index(request):
@@ -178,6 +179,7 @@ def index(request):
         })
         graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
         return graph_div 
+   
 
     context = {
      'total_candidates': get_total_candidates(),
@@ -213,6 +215,7 @@ def pages(request):
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
         context['segment'] = load_template
+        context['dummy_table'] = get_dummy_tables_html()
 
         html_template = loader.get_template('home/' + load_template)
         return HttpResponse(html_template.render(context, request))
@@ -226,3 +229,23 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
+def get_dummy_tables_html():
+    df = pd.read_csv(BASE_DIR + "/apps/static/assets/data.csv", encoding="utf-16")
+
+    fig = go.Figure(data=[go.Table(
+        header=dict(values=list(df.columns),
+                    fill_color='#1a2035',
+                    align='left'),
+        cells=dict(values=[df.link, df.name, df.current_title, df.current_location,
+                    df.experiences, df.educations, df.skills],
+                   fill_color='#1f283e',
+                   align='left'))
+    ])
+    fig.update_layout({
+        'plot_bgcolor': 'rgba(0,0,0,0)',
+        'paper_bgcolor': 'rgba(0,0,0,0)',
+        'font_color': 'white',
+        'height': 1500
+    })
+    table_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
+    return table_div 
