@@ -111,8 +111,8 @@ def index(request):
         labels = [a for (a, b) in result]
         values = [b for (a, b) in result]
 
-        data = {"type": labels, "value": values}
-        fig = px.bar(data, x="type", y="value", orientation='v')
+        data = {"type": values, "value": labels}
+        fig = px.bar(data, x="type", y="value", orientation='h')
         fig.update_layout({
             'plot_bgcolor': 'rgba(0,0,0,0)',
             'paper_bgcolor': 'rgba(0,0,0,0)',
@@ -120,6 +120,28 @@ def index(request):
         })
         graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
         return graph_div 
+
+    def get_edus():
+        courses = []
+        for each_person_educations in df["educations"]:
+            tmps = eval(each_person_educations)
+            for tmp in tmps:
+                if len(tmp) != 2:
+                    continue
+                tmp2 = tmp[0].split(",")
+                if len(tmp2) != 2:
+                    continue
+                level = tmp2[0].strip()
+                course = tmp2[1].strip()
+                
+                course = course.lower()
+                course = re.sub("\(.*?\)",'',course).strip()
+                courses.append(course)
+                
+        cnt = Counter(courses)
+        topN = cnt.most_common(100)
+        result = {"data": [[a,b] for (a, b) in topN]}
+        return result;
 
     def get_total_skills_histogram_html():
         skills_by_total = []
@@ -188,6 +210,7 @@ def index(request):
      'location_pie_chart': get_location_pie_chart_html(),
      'skill_top_30_bar_chart': get_top_30_skills_bar_html(),
      'skill_histogram_chart': get_total_skills_histogram_html(),
+     'educations': get_edus(),
      'dummy_pie': get_dummy_pie_html(),
      'dummy_pie2': get_dummy_pie_html(),
      'dummy_bar': get_dummy_bar_html(),

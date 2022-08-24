@@ -124,11 +124,12 @@
 				<div class="col-md-6">
 					<div class="card full-height">		
 						<div class="card-header">
-							<div class="card-title">Candidates Education Levels</div>
+							<div class="card-title">Candidates Education Word Cloud</div>
 						</div>
 						<div class="card-body">
 							<div class="chart-container">
-								{{dummy_pie2|safe}}
+								<div id="skill-wc-container" style='display:none'></div>
+								<canvas id="skill-wc" width="600" height="400" style='width:100%;height:auto'></canvas>
 							</div>
 						</div>
 					</div>
@@ -147,7 +148,13 @@
 	<script src="/static/assets/js/setting-demo.js"></script>
 
 	<script>	
-	console.log("script")
+		const eduWords = JSON.parse("{{ educations | escapejs }}".replace(/'/g,'"'));
+		const config = {list : eduWords.data};
+	    WordCloud([
+		    document.getElementById('skill-wc'),
+		     document.getElementById('skill-wc-container')
+		  ], config);
+
 	</script>
 
 {% endblock javascripts %}
