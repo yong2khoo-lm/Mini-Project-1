@@ -16,6 +16,10 @@
 2. Candidates Skill sets - To get insight of the candidate skills, which is crucial in the job roles.
 3. Total Skills Histogram - Have an understanding of how many skills the candidate input to their profiles.
 4. Candidates Education Word Cloud - To get a high level understanding of the distribution of the candidate education background.
+5. Table - Show the raw scraped data
+
+# Hosting
+1. With [Digital Ocean](https://king-prawn-app-7mrjr.ondigitalocean.app/)
 
 # Challenges
 ## Web scraping
@@ -25,7 +29,7 @@
 4. Pypi package [Linked Scraper](https://pypi.org/project/linkedin-scraper/) doesn't work. Have to write the script from scratch.
 
 ## Django
-1. Use plotly to plot graph. As it is relatively easier to render at html
+1. Use [plotly](https://plotly.com/) to plot graph. As it is relatively easier to render at html
 2. Use a js [wordcloud lib](https://github.com/timdream/wordcloud2.js/) instead of from python.
 
 
