@@ -15,7 +15,7 @@
 1. Candidates by Location - To understand the candidate origin location and thus define hiring strategy. Pie chart gives good overview on the most dense Data Scientist location
 2. Candidates Skill sets - To get insight of the candidate skills, which is crucial in the job roles.
 3. Total Skills Histogram - Have an understanding of how many skills the candidate input to their profiles.
-4. Candidates Education Word Cloud - To get  ahigh level understanding of the distribution of the candidate education background.
+4. Candidates Education Word Cloud - To get a high level understanding of the distribution of the candidate education background.
 
 # Challenges
 ## Web scraping
