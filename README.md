@@ -31,5 +31,6 @@
 ## Django
 1. Use [plotly](https://plotly.com/) to plot graph. As it is relatively easier to render at html
 2. Use a js [wordcloud lib](https://github.com/timdream/wordcloud2.js/) instead of from python.
+3. Great to have found the [Atlantis template](https://appseed.us/admin-dashboards/django-dashboard-atlantis-dark), which feature User Registration and Login.
 
 
