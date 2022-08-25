@@ -27,7 +27,7 @@ def index(request):
     def get_total_candidates_exp():
         exps = []
         for each_candidate_exp in df["experiences"]:
-            exps = exps + [exp for exps in eval(each_candidate_exp) for exp in exps["exp"]]
+            exps = exps + [exps for exps in eval(each_candidate_exp)]
         return len(exps)
     
     def get_total_candidates_skill():
@@ -106,13 +106,15 @@ def index(request):
             skills_by_total = skills_by_total + tmp
 
         cnt = Counter(skills_by_total)
-        result = cnt.most_common(30)
+        result = cnt.most_common(20)
+
+        result = sorted(result, key=lambda x: x[1])
 
         labels = [a for (a, b) in result]
         values = [b for (a, b) in result]
 
-        data = {"type": values, "value": labels}
-        fig = px.bar(data, x="type", y="value", orientation='h')
+        data = {"Total Count": values, "Skill": labels}
+        fig = px.bar(data, x="Total Count", y="Skill", orientation='h')
         fig.update_layout({
             'plot_bgcolor': 'rgba(0,0,0,0)',
             'paper_bgcolor': 'rgba(0,0,0,0)',
@@ -153,7 +155,8 @@ def index(request):
         fig.update_layout({
             'plot_bgcolor': 'rgba(0,0,0,0)',
             'paper_bgcolor': 'rgba(0,0,0,0)',
-            'font_color': 'white'
+            'font_color': 'white',
+            'yaxis_title': 'Total Candidates'
         })
         graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
         return graph_div 
@@ -256,10 +259,10 @@ def get_dummy_tables_html():
     df = pd.read_csv(BASE_DIR + "/apps/static/assets/data.csv", encoding="utf-16")
 
     fig = go.Figure(data=[go.Table(
-        header=dict(values=list(df.columns),
+        header=dict(values=list(df.columns)[1:],
                     fill_color='#1a2035',
                     align='left'),
-        cells=dict(values=[df.link, df.name, df.current_title, df.current_location,
+        cells=dict(values=[df.name, df.current_title, df.current_location,
                     df.experiences, df.educations, df.skills],
                    fill_color='#1f283e',
                    align='left'))
