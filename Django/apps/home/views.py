@@ -91,7 +91,7 @@ def index(request):
         graph_div = plotly.offline.plot(fig, auto_open=False, output_type="div")
         return graph_div 
 
-    def get_top_30_skills_bar_html():
+    def get_top_skills_bar_html():
         def get_skill(skill):
             if skill is None:
                 return "unknown"
@@ -126,15 +126,15 @@ def index(request):
     def get_edus():
         courses = []
         for each_person_educations in df["educations"]:
-            tmps = eval(each_person_educations)
-            for tmp in tmps:
-                if len(tmp) != 2:
+            person_edus = eval(each_person_educations)
+            for person_edu in person_edus:
+                if len(person_edu) != 2:
                     continue
-                tmp2 = tmp[0].split(",")
-                if len(tmp2) != 2:
+                person_edu_sp = person_edu[0].split(",")
+                if len(person_edu_sp) != 2:
                     continue
-                level = tmp2[0].strip()
-                course = tmp2[1].strip()
+                level = person_edu_sp[0].strip()
+                course = person_edu_sp[1].strip()
                 
                 course = course.lower()
                 course = re.sub("\(.*?\)",'',course).strip()
@@ -211,15 +211,9 @@ def index(request):
      'total_candidates_exp': get_total_candidates_exp(),
      'total_candidates_skill': get_total_candidates_skill(),
      'location_pie_chart': get_location_pie_chart_html(),
-     'skill_top_30_bar_chart': get_top_30_skills_bar_html(),
+     'skill_top_bar_chart': get_top_skills_bar_html(),
      'skill_histogram_chart': get_total_skills_histogram_html(),
-     'educations': get_edus(),
-     'dummy_pie': get_dummy_pie_html(),
-     'dummy_pie2': get_dummy_pie_html(),
-     'dummy_bar': get_dummy_bar_html(),
-     'dummy_col': get_dummy_col_html(),
-     'dummy_histogram': get_dummy_histogram_html()
-
+     'educations': get_edus()
     }
 
     html_template = loader.get_template('home/index.html')
