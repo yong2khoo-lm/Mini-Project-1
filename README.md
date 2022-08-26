@@ -20,6 +20,7 @@
 
 # Hosting
 1. With [Digital Ocean](https://www.digitalocean.com/), at [here](https://king-prawn-app-7mrjr.ondigitalocean.app/).
+2. Login: username: `test`, password: `abababab`
 
 # Challenges
 ## Web scraping
