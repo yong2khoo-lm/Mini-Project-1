@@ -19,7 +19,7 @@
 5. Table - Show the raw scraped data
 
 # Hosting
-1. With [Digital Ocean](https://king-prawn-app-7mrjr.ondigitalocean.app/)
+1. With [Digital Ocean](https://www.digitalocean.com/), at [here](https://king-prawn-app-7mrjr.ondigitalocean.app/).
 
 # Challenges
 ## Web scraping
@@ -31,6 +31,17 @@
 ## Django
 1. Use [plotly](https://plotly.com/) to plot graph. As it is relatively easier to render at html
 2. Use a js [wordcloud lib](https://github.com/timdream/wordcloud2.js/) instead of from python.
-3. Great to have found the [Atlantis template](https://appseed.us/admin-dashboards/django-dashboard-atlantis-dark), which feature User Registration and Login.
+3. Great to have found the [Atlantis template](https://appseed.us/admin-dashboards/django-dashboard-atlantis-dark), which features User Registration and Login.
+
+# Project Requirements
+
+- [x] Scrape data
+- [x] Clean it, document it, visualize it
+- [x] Project runnable at local
+- [x] Push to Github with proper commit messages
+- [x] Host it on Digital Ocean
+
+# Enhancement
+1. To meet the original objective, aka, hunting for data scientist from LinkedIn, it is better to display the results in a tabular format, with searching feature.
 
 
