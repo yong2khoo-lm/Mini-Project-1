@@ -13,10 +13,25 @@
 
 # Analysis and Visualization
 1. Candidates by Location - To understand the candidate origin location and thus define hiring strategy. Pie chart gives good overview on the most dense Data Scientist location
+
+<img src="https://user-images.githubusercontent.com/51041738/187021408-8d0d2074-2e68-4a72-bb81-e29f600260e2.png" width=500/>
+
 2. Candidates Skill sets - To get insight of the candidate skills, which is crucial in the job roles.
+
+<img src="https://user-images.githubusercontent.com/51041738/187021455-c1e5fe79-522b-4138-b04c-8fb4aefdbd31.png" width=500/>
+
 3. Total Skills Histogram - Have an understanding of how many skills the candidate input to their profiles.
+
+<img src="https://user-images.githubusercontent.com/51041738/187021502-23bb2432-c3b7-4dda-a055-ee9ef74438e3.png" width=500/>
+
 4. Candidates Education Word Cloud - To get a high level understanding of the distribution of the candidate education background.
+
+<img src="https://user-images.githubusercontent.com/51041738/187021547-df5ca869-2720-428c-b160-a945267f55c9.png" width=500 />
+
 5. Table - Show the raw scraped data
+
+<img src="https://user-images.githubusercontent.com/51041738/187021643-3c3cde50-a7e4-474e-93da-72bfe6e9d470.png" width=500 />
+
 
 # Hosting
 1. With [Digital Ocean](https://www.digitalocean.com/), at [here](https://king-prawn-app-7mrjr.ondigitalocean.app/).
